@@ -1,0 +1,53 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+rdr
+rdr_tool*
+redis-rdb-analyzer
+redis-rdb-analyzer-*
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.txt
+coverage.html
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Temporary files
+tmp/
+data/*.db
+data/*.db-*
+*.tmp
+*.swp
+*.swo
+*~
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Go workspace file
+go.work
+
+#Clause
+.claude
+
+# Environment variables
+.env
+.env.local
+.env.*.local

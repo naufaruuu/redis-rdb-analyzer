@@ -1,0 +1,143 @@
+# Default values for redis-rdb-analyzer
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+# Application configuration
+config:
+  port: 8080
+  # Kubernetes pod discovery cache duration
+  pod_cache: 15m
+  # Maximum RDB file size to analyze
+  max_rdb_size: 10Gb
+
+image:
+  repository: redis-rdb-analyzer
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "v1.0"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # RBAC for kubectl access
+  # Permissions needed for kubectl to discover and exec into pods
+  rules:
+    - apiGroups: [""]
+      resources: ["pods"]
+      verbs: ["get", "list"]
+    - apiGroups: [""]
+      resources: ["pods/exec"]
+      verbs: ["create", "get"]
+
+
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 1000
+  runAsUser: 1000
+  runAsNonRoot: true
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
+  allowPrivilegeEscalation: false
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+  annotations: {}
+
+ingress:
+  enabled: false
+  className: "nginx"
+  annotations:
+    # kubernetes.io/ingress.class: nginx
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  hosts:
+    - host: rdb-analyzer.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: rdb-analyzer-tls
+      hosts:
+        - rdb-analyzer.example.com
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+  requests:
+    cpu: 200m
+    memory: 512Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 30
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 3
+  successThreshold: 1
+  failureThreshold: 3
+
+# Persistent storage for SQLite database (analysis history)
+# Note: tmp directory uses emptyDir (ephemeral)
+persistence:
+  enabled: true
+  # storageClass: "default"
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  # existingClaim: ""
+
+# Node selection
+nodeSelector: {}
+  # Example:
+  # kubernetes.io/arch: amd64
+  # node-role.kubernetes.io/worker: "true"
+
+# Tolerations for node taints
+tolerations: []
+  # Example:
+  # - key: "dedicated"
+  #   operator: "Equal"
+  #   value: "tools"
+  #   effect: "NoSchedule"
+
+# Pod affinity/anti-affinity
+affinity: {}
+  # Example - Prefer nodes with specific labels:
+  # nodeAffinity:
+  #   preferredDuringSchedulingIgnoredDuringExecution:
+  #   - weight: 100
+  #     preference:
+  #       matchExpressions:
+  #       - key: node-type
+  #         operator: In
+  #         values:
+  #         - tools

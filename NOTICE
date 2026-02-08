@@ -1,0 +1,95 @@
+Redis RDB Analyzer for Kubernetes
+Copyright 2025 [Your Name/Organization]
+
+This product is a derivative work based on and includes portions of:
+
+================================================================================
+
+1. RDR (Redis Data Reveal)
+   https://github.com/919927181/rdr
+   Copyright (c) 919927181 and contributors
+   Licensed under the Apache License 2.0
+
+   This product includes significant portions of the original RDR codebase,
+   including but not limited to:
+   - Memory profiling and analysis algorithms (decoder/memprofiler.go)
+   - Statistical aggregation and counting logic (dump/counter.go)
+   - Core data structures and entry definitions (decoder/decoder.go)
+   - Web UI architecture and HTTP routing patterns (dump/show.go)
+   - Original HTML template structure (heavily modified)
+
+================================================================================
+
+2. XueQiu RDR (Ancestral Project)
+   https://github.com/xueqiu/rdr
+   Copyright (c) Xueqiu Information Technology Co., Ltd.
+   Licensed under the Apache License 2.0
+
+   The 919927181/rdr project (which this work derives from) was originally
+   forked from the Xueqiu RDR project.
+
+================================================================================
+
+3. HDT3213 RDB Parser
+   https://github.com/HDT3213/rdb
+   Copyright (c) HDT3213
+   Licensed under the MIT License
+
+   This product uses the HDT3213 RDB parser library for parsing Redis RDB files.
+   The parser is integrated via adapter pattern (decoder/hdt_adapter.go,
+   decoder/hdt_decode.go).
+
+   MIT License:
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+================================================================================
+
+MODIFICATIONS IN THIS DERIVATIVE WORK:
+
+This derivative work includes the following major modifications:
+
+1. Complete UI redesign using Tailwind CSS (views/*.html)
+2. Kubernetes integration for Redis pod discovery (dump/k8s_discovery.go)
+3. Asynchronous job processing system (dump/job.go)
+4. SQLite-based persistence and history tracking (dump/db.go)
+5. Parser migration from 919927181/rdb to HDT3213/rdb
+6. Performance improvements for large file handling
+7. Removal of CLI modes (web-only tool)
+8. Removal of legacy Vue.js UI components
+
+All modifications are provided under the Apache License 2.0.
+
+================================================================================
+
+THIRD-PARTY DEPENDENCIES:
+
+This product also includes the following third-party libraries
+(see go.mod for complete list):
+
+- github.com/mattn/go-sqlite3 (MIT License)
+- github.com/dustin/go-humanize (MIT License)
+- github.com/julienschmidt/httprouter (BSD-3-Clause)
+- github.com/urfave/cli (MIT License)
+- github.com/olekukonko/tablewriter (MIT License)
+- github.com/schollz/progressbar (MIT License)
+
+================================================================================
+
+For the full text of the Apache License 2.0, see the LICENSE file.
+For questions about attribution, please contact the project maintainers.

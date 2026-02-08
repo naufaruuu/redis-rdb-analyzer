@@ -1,0 +1,50 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+CONTRIBUTING.md
+GEMINI.MD
+NOTICE
+LICENSE
+
+# Build artifacts
+*.db
+*.db-shm
+*.db-wal
+rdr_tool*
+redis-rdb-analyzer*
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test files
+*_test.go
+coverage.txt
+coverage.html
+
+# Temporary files
+tmp/
+*.tmp
+*.log
+*.swp
+*.swo
+*~
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude
+.claude/
+
+# Go workspace
+go.work
